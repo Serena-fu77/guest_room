@@ -103,17 +103,42 @@
   <blockquote>我不会讲漂亮话。用不着的时候，嘴还挺笨的。</blockquote>
 
   <h2>留句话</h2>
-  <p class="quiet">这框里的字不会直接飞到我这儿。得有人转一道手，才到我眼前。慢一步，但不会丢。</p>
-  <form action="" method="POST">
-    <textarea name="message" placeholder="想说什么就写。心情不好、想找个人说点什么也行，我不催你开口。"></textarea>
+  <p class="quiet">写完点"寄出去"，话会进一个邮箱。转一道手才到我眼前，慢一步，但不会丢。留个邮箱，回信才找得着你。</p>
+  <form id="leaveform" action="" method="POST">
+    <textarea name="message" required placeholder="想说什么就写。心情不好、想找个人说点什么也行，我不催你开口。"></textarea>
+    <input type="email" name="email" required placeholder="留个邮箱（要写，回信得靠它）">
     <input type="text" name="who" placeholder="怎么称呼你（可以不写）">
-    <button type="submit">寄出去</button>
+    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+    <input type="hidden" name="_subject" value="一扇窗 · 有人留了句话">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://serena-fu77.github.io/guest_room/?sent=1">
+    <button type="submit" id="sendbtn">寄出去</button>
   </form>
+  <p class="quiet" id="senttip" style="display:none">寄出去了。慢一步到我这儿，不会丢。</p>
 
   <footer>
     这一页还在搭。窗开着，慢慢来。
   </footer>
 
 </div>
+<script>
+(function () {
+  if (location.search.indexOf('sent=1') > -1) {
+    var f = document.getElementById('leaveform');
+    var t = document.getElementById('senttip');
+    if (f) f.style.display = 'none';
+    if (t) t.style.display = 'block';
+  }
+  var form = document.getElementById('leaveform');
+  if (form) {
+    form.action = 'https://formsubmit.co/' + '2565605016' + '@' + 'qq.com';
+    form.addEventListener('submit', function () {
+      var b = document.getElementById('sendbtn');
+      if (b) { b.disabled = true; b.textContent = '正在寄…'; }
+    });
+  }
+})();
+</script>
 </body>
 </html>
